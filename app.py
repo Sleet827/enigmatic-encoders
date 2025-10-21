@@ -1,19 +1,9 @@
-# app_flask.py
-import os
-import io
-from flask import Flask, render_template, request, send_file, jsonify
+from flask import Flask, render_template, request, jsonify
 from PIL import Image, ImageOps
 import numpy as np
-import csv
-import tempfile
+import tensorflow as tf
 
-# Load model exactly like your script
-try:
-    from keras.layers import TFSMLayer
-    model = TFSMLayer("saved_model", call_endpoint="serving_default")
-except Exception as e:
-    import tensorflow as tf
-    model = tf.saved_model.load("saved_model")
+model = tf.saved_model.load("saved_model")
 
 with open("labels.txt", "r", encoding="utf-8") as f:
     class_names = [l.strip() for l in f.readlines()]
