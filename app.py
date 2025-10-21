@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from PIL import Image, ImageOps
 import numpy as np
 import tensorflow as tf
+import os
 
 model = tf.saved_model.load("saved_model")
 
@@ -59,4 +60,5 @@ def classify():
     return jsonify(results)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
